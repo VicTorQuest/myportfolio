@@ -288,7 +288,7 @@
               <h4>{{project.title}}</h4>
               <p>{{project.category}}</p>
               <div class="portfolio-links mt-2">
-                <a href="{{project.github_repo}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Code"><i class="bi bi-code-slash"></i></a>
+                <a href="{{project.github_repo}}" target="_blank" title="Code"><i class="bi bi-code-slash"></i></a>
                 <a href="{% url 'project_detail' project.slug %}" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Project Details"><i class="bi bi-eye"></i></a>
               </div>
             </div>
