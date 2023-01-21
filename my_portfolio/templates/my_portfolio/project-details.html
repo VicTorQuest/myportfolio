@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>My project - {{project.title}}</title>
+  <meta content="{{project.description}}" name="description">
+  <meta content="victor, okolie, victor okolie, portfolio, web developer, backend, backend web developer, backend web development, django developer, django" name="keywords">
+  
+  <meta property="og:title" content="My project - {{project.title}}">
+  <meta property="og:type" content="Portfolio website">
+  <meta property="og:url" content="{{request.build_absolute_uri}}">
+  <meta property="og:image" content="{{project.projectthumbnail.all.0.url}}">
+  <meta property="og:description" content="{{project.description}}">
+
+
+  <!-- twitter cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@victorokolie_" />
+  <meta name="twitter:title" content="My project - {{project.title}}" />
+  <meta name="twitter:description" content="{{project.description}}" />
+  <meta name="twitter:image" content="{% static 'og-image.GIF' %}" />
+
+
+  <link rel="canonical" href="{{request.path}}">
+  <link rel="home" href="{% url 'index' %}">
+  <!-- Favicons -->
+  <link href="{%static 'favicon.ico' %}" rel="icon">
+  <link href="{%static 'favicon.ico' %}"  rel="apple-touch-icon">
+
+  <!--  CSS Files -->
+  <link href="{% static 'my_portfolio/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'my_portfolio/css/style.css' %}" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+  <main id="main">
+
+    <!-- ======= Portfolio Details ======= -->
+    <div id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row align-items-center">
+
+          <div class="col-lg-8">
+            <h2 class="portfolio-title">{{project.title}}</h2>
+
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+
+                {% for thumbnails in project.projectthumbnail.all|slice:"1:" %}
+                <div class="swiper-slide">
+                  <img src="{{thumbnails.image.url}}" class="thumbnails" alt="">
+                </div>
+                {% endfor %}
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-4 portfolio-info">
+            <h3>Project information</h3>
+            <ul>
+              <li><strong>Category</strong>: {{project.category}}</li>
+              <li><strong>Client</strong>: {{project.client}}</li>
+              <li><strong>Project date</strong>: {{project.date|date:"M d, Y"}}</li>
+              <li><strong>Tools</strong>: {% for tool in project.tools.all %}
+                {{tool.name}} {% if not forloop.last %}|{% endif %}
+                {% endfor %}</li>
+              <li><strong>Live URL</strong>: <a href="{{project.live_url}}" targert="_blank">{{project.live_url}}</a></li>
+            </ul>
+
+            <p>
+              {{project.description}}
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div><!-- End Portfolio Details -->
+
+  </main><!-- End #main -->
+
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'my_portfolio/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'my_portfolio/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Template Main JS File -->
+
+  <script src="{% static 'my_portfolio/js/main.js' %}"></script>
+
+</body>
+
+</html>

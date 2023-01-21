@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>404 - Page Not Found</title>
+  
+  <meta property="og:title" content="404 - Page Not Found">
+  <meta property="og:type" content="Portfolio website">
+
+  <link rel="home" href="{% url 'index' %}">
+  <!-- Favicons -->
+  <link href="{%static 'favicon.ico' %}" rel="icon">
+  <link href="{%static 'favicon.ico' %}"  rel="apple-touch-icon">
+
+  <!--  CSS Files -->
+  <link href="{% static 'my_portfolio/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'my_portfolio/css/style.css' %}" rel="stylesheet">
+
+    <style>
+.button {
+    color: rgb(255, 255, 255);
+    background: rgb(27, 196, 248);
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    padding: 10px 30px;
+    transition: all 0.4s ease 0s;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: none;
+    text-decoration: none;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+
+.button:hover {
+    color: white;
+    opacity: 0.8;
+}
+
+.container {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+
+}
+
+    </style>
+</head>
+
+<body>
+
+  <main id="main">
+
+    <!-- ======= Portfolio Details ======= -->
+    <div id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+            <h1 style="font-size: 5rem;">404 - Page Not Found<h1>
+            <p class="feedback-p">- Seems like you must have entered a wrong url, or followed the wrong link </p>
+            <div class="text-center mt-5 pt-5"><a class="button" href="{% url 'index' %}">Return to Home </a></div>
+      </div>
+    </div><!-- End Portfolio Details -->
+
+  </main><!-- End #main -->
+
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'my_portfolio/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <!-- Template Main JS File -->
+
+  <script src="{% static 'my_portfolio/js/main.js' %}"></script>
+
+</body>
+
+</html>

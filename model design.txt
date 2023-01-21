@@ -1,0 +1,76 @@
+Model - User
+            - username
+            - first name 
+            - last name
+            - email 
+            - password
+
+
+Model - Service 
+            - title
+            - description
+            - icon
+
+Model - Portfolio
+            - user(one to one rel)
+            - category
+            - about
+            - image 
+            - address
+            - phone number
+            - twiiter link
+            - linkedin link
+            - github link
+            - discord link
+            - services (many to many)
+
+Model - Tools 
+            - name
+            - image(icon link from your static files)
+
+Model - category
+            - name
+
+Model - Project 
+            - user (foreign key)
+            - title
+            - category(foreign key)
+            - description
+            - tools(many to many)
+            - live url
+            - github repo
+            - client
+            - slug
+            - date
+            - last updated 
+
+    Admin
+        - ProjectThumbnail(stacked inline)
+
+Model - ProjectThumbnail
+            - Project(foreign key)
+            - image
+
+
+Model - Feedback 
+            - name
+            - email
+            - feedback
+            - image
+            - date
+
+Model - ProfessionalExperience
+            - role
+            - duration
+            - remote(boolean field)
+            - experience
+
+Model - Summary
+            - user(one to one field)
+            - name
+            - info
+
+Model - Education
+            - degree
+            - duration
+            - institution
