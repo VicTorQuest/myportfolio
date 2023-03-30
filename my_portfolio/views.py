@@ -75,12 +75,14 @@ def submit_email(request):
             return JsonResponse({'message': message, 'error': True})
 
 def get_blog_posts(request):
-    blog_id = os.environ.get('blog_id')
-    blog_api_key = os.environ.get('blog_api_key')
-    getting_blog_posts = requests.get('https://www.googleapis.com/blogger/v3/blogs/{}/posts?key={}'.format(blog_id, blog_api_key)) 
+    blog_api_token = os.environ.get('blog_api_token')
+    endpoint = 'http://127.0.0.1:8000/blogposts/api/'
+    headers = {
+        'Authorization': f'Token {blog_api_token}'
+    }
+    getting_blog_posts = requests.get(endpoint, headers=headers) 
     gotten_blog_posts  = json.loads(getting_blog_posts.content)
-    all_posts = gotten_blog_posts["items"]
-    return JsonResponse({'all_posts': all_posts})
+    return JsonResponse({'all_posts': gotten_blog_posts})
 
 def robots_txt(request):
     
