@@ -15,7 +15,7 @@
   <meta property="og:title" content="Victor Okolie - Backend Web Developer">
   <meta property="og:type" content="Portfolio website">
   <meta property="og:url" content="{{request.build_absolute_uri}}">
-  <meta property="og:image" content="{% static 'og-image.GIF' %}">
+  <meta property="og:image" content="{% static 'og-img.png' %}">
 
   <meta property="og:description" content="Hi there, I'm Victor Okolie a Backend Web Developer and Software Engineer">
   <meta property="og:video" content="{% static 'og-video.MP4' %}" />
@@ -27,13 +27,12 @@
   <meta name="twitter:site" content="@victorokolie_" />
   <meta name="twitter:title" content="Victor Okolie - Backend Web Developer" />
   <meta name="twitter:description" content="Hi there, I'm Victor Okolie a Backend Web Developer and Software Engineer" />
-  <meta name="twitter:image" content="{% static 'og-image.GIF' %}" />
+  <meta name="twitter:image" content="{% static 'og-img.png' %}" />
 
   <link rel="canonical" href="{{request.path}}">
   <link rel="home" href="{% url 'index' %}">
   <!-- Favicons -->
   <link href="{%static 'favicon.ico' %}" rel="icon">
-  <link href="{%static 'favicon.ico' %}"  rel="apple-touch-icon">
   
   <!--  CSS Files -->
   <link href="{% static 'my_portfolio/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -62,7 +61,7 @@
         <ul>
           <li><a class="nav-link active" href="#header">Home</a></li>
           <li><a class="nav-link" href="#about">About</a></li>
-          <li><a class="nav-link" href="#resume">Resume</a></li>
+          <li><a class="nav-link" href="#resume">Experience</a></li>
           <li><a class="nav-link" href="#projects">Projects</a></li>
           <li><a class="nav-link" href="#services">Services</a></li>
           <li><a class="nav-link" href="#blog">Blog</a></li>
@@ -73,6 +72,7 @@
 
       <div class="social-links">
         <a href="{{my_portfolio.twitter}}" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="{{my_portfolio.instagram}}" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="{{my_portfolio.discord}}" target="_blank" class="facebook"><i class="bi bi-discord"></i></a>
         <a href="{{my_portfolio.linkedin}}" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
         <a href="{{my_portfolio.github}}" target="_blank" class="github"><i class="bi bi-github"></i></a>
@@ -379,6 +379,7 @@
   
 
               <a href="{{my_portfolio.twitter}}" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="{{my_portfolio.instagram}}" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
               <a href="{{my_portfolio.discord}}" target="_blank" class="facebook"><i class="bi bi-discord"></i></a>
               <a href="{{my_portfolio.linkedin}}" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
               <a href="{{my_portfolio.github}}" target="_blank" class="github"><i class="bi bi-github"></i></a>
@@ -431,16 +432,11 @@
     </div>
   </section><!-- End Contact Section -->
 
-  <!-- loader -->
+
+  <a href="{{my_portfolio.resume.url}}" class="resume-icon" data-toggle="tooltip" title="View Resume"download target="_blank" ><i class="bi bi-file-earmark-person"></i></a>
+
+
   <script src="{% static 'my_portfolio/vendor/jquery/jquery-3.6.0.js' %}"></script>
-  <script>
-    $(window).on('load', function () {
-      setTimeout(() => {
-        $(".loader-bg").fadeOut(1000);
-      }, 1000);
-    })
-   
-  </script>
   
   <!-- Vendor JS Files -->
   <!-- <script src="{% static 'my_portfolio/vendor/purecounter/purecounter.js' %}"></script> -->
@@ -450,12 +446,25 @@
   <script src="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'my_portfolio/vendor/waypoints/noframework.waypoints.js' %}"></script>
   <script src="{% static 'my_portfolio/vendor/particles-js/particles.min.js' %}"></script>
+  <script>
+    $(window).on('load', function () {
+      setTimeout(() => {
+        $(".loader-bg").fadeOut(1000);
+      }, 1000);
+    })
+   
+  </script>
 
   
 
   <!-- Template Main JS File -->
   <script src="{% static 'my_portfolio/js/main.js' %}"></script>
   <script src="{% static 'my_portfolio/js/custom-particles.js' %}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    });
+</script>
 
   <script>
     // using jQuery

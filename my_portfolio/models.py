@@ -27,7 +27,9 @@ class Portfolio(models.Model):
     linkedin = models.URLField()
     github = models.URLField()
     discord = models.URLField()
+    instagram = models.URLField()
     services = models.ManyToManyField(Service)
+    resume = models.FileField(upload_to='resume', null=True)
 
     class Meta:
         verbose_name_plural = "Portfolio"
