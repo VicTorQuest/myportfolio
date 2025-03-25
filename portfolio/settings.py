@@ -173,3 +173,10 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+
+
+# Only enable WhiteNoise in production (DEBUG = False)
+if not DEBUG:
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')  # Add WhiteNoise after SecurityMiddleware
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

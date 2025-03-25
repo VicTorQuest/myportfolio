@@ -19,3 +19,4 @@ six==1.16.0
 sqlparse==0.4.2
 tzdata==2022.1
 urllib3==1.26.14
+whitenoise==6.9.0
