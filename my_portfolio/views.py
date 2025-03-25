@@ -9,7 +9,7 @@ from .models import Portfolio, Tool, Feedback, ProfessionalExperience, Education
 
 
 User = get_user_model()
-my_user = User.objects.get(username='Victor')
+my_user = User.objects.filter(username='Victor').first()
 
 # Create your views here.
 def index(request):
