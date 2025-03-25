@@ -3,9 +3,6 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse, reverse_lazy
 from .models import Project
 
-User = get_user_model()
-my_user = User.objects.filter(username='Victor').first()
-
 
 class PortfolioSitemap(Sitemap):
     change_freq = 'never'
