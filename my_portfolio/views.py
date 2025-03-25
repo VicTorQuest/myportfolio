@@ -9,10 +9,10 @@ from .models import Portfolio, Tool, Feedback, ProfessionalExperience, Education
 
 
 User = get_user_model()
-my_user = User.objects.filter(username='Victor').first()
 
 # Create your views here.
 def index(request):
+    my_user = User.objects.filter(username='Victor').first()
     my_portfolio = Portfolio.objects.get(user=my_user)
     email = my_user.email
     tools = Tool.objects.all()
@@ -59,6 +59,7 @@ def submit_feedback(request):
             return JsonResponse({'message': message, 'error': True})
 
 def submit_email(request):
+    my_user = User.objects.filter(username='Victor').first()
     if request.method == 'POST':
         try:
             name = request.POST.get('name')
