@@ -6,44 +6,81 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>My project - {{project.title}}</title>
-  <meta content="{{project.description}}" name="description">
-  <meta content="victor, okolie, victor okolie, portfolio, web developer, backend, backend web developer, backend web development, django developer, django" name="keywords">
+  <title>{{project.title}} - Victor Okolie Portfolio</title>
+  <meta name="title" content="{{project.title}} - Victor Okolie Portfolio">
+  <meta name="author" content="Victor Okolie"/>
+  <meta name="description" content="{{project.description|truncatechars:160}}">
+  <meta name="keywords" content="{{project.title}}, {% for tool in project.tools.all %}{{tool.name}}, {% endfor %} victor, okolie, victor okolie, quest, quest codes, quest coding, portfolio, web developement, backend developement, backend developer, web developer, django developement, django developer, django, {{project.category.name|lower}}">
   
-  <meta property="og:title" content="My project - {{project.title}}">
-  <meta property="og:type" content="Portfolio website">
+  <meta property="og:type" content="article">
   <meta property="og:url" content="{{request.build_absolute_uri}}">
-  <meta property="og:image" content="{{project.projectthumbnail.all.0.url}}">
-  <meta property="og:description" content="{{project.description}}">
+  <meta property="og:title" content="{{project.title}} - Victor Okolie's Portfolio">
+  <meta property="og:description" content="{{project.description|truncatechars:160}}">
+  <meta property="og:image" content="{{ thumbnail_url }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:author" content="Victor Okolie">
+  <meta property="article:published_time" content="{{project.date|date:'c'}}">
+  <meta property="article:modified_time" content="{{project.last_updated|date:'c'}}">
 
 
   <!-- twitter cards -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="{{request.build_absolute_uri}}">
+  <meta name="twitter:title" content="{{project.title}} - Victor Okolie's Portfolio">
+  <meta name="twitter:description" content="{{project.description|truncatechars:160}}">
+  <meta name="twitter:image" content="{{ thumbnail_url }}" />
   <meta name="twitter:site" content="@victorokolie_" />
-  <meta name="twitter:title" content="My project - {{project.title}}" />
-  <meta name="twitter:description" content="{{project.description}}" />
-  <meta name="twitter:image" content="{% static 'og-image.gif' %}" />
+  <meta name="twitter:creator" content="@victorokolie_">
 
-
-  <link rel="canonical" href="{{request.path}}">
+  <!-- Canonical and Navigation -->
+  <link rel="canonical" href="{{request.build_absolute_uri}}">
   <link rel="home" href="{% url 'index' %}">
+
   <!-- Favicons -->
   <link href="{%static 'favicon.ico' %}" rel="icon">
   <link href="{%static 'favicon.ico' %}"  rel="apple-touch-icon">
 
+  <!-- Preload critical resource  -->
+  <link rel="preload" href="{% static 'my_portfolio/css/style.css' %}" as="style">
+
   <!--  CSS Files -->
   <link href="{% static 'my_portfolio/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
+  
   <!-- Template Main CSS File -->
   <link href="{% static 'my_portfolio/css/style.css' %}" rel="stylesheet">
 
+  <!-- Non-critical CSS (load asynchronously) -->
+  <link href="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+
+  <!-- Structured Data for better SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "{{project.title}}",
+    "description": "{{project.description|truncatechars:160}}",
+    "url": "{{request.build_absolute_uri}}",
+    "image": "{{request.scheme}}://{{request.get_host}}{{thumbnail_url}}",
+    "author": {
+      "@type": "Person",
+      "name": "Victor Okolie",
+      "url": "{{request.scheme}}://{{request.get_host}}{% url 'index' %}"
+    },
+    "datePublished": "{{project.date|date:'c'}}",
+    "dateModified": "{{project.last_updated|date:'c'}}",
+    "genre": "{{project.category.name}}",
+    "programmingLanguage": [{% for tool in project.tools.all %}"{{tool.name}}"{% if not forloop.last %}, {% endif %}{% endfor %}]
+  }
+  </script>
 
 </head>
 
 <body>
 
   <main id="main">
+
 
     <!-- ======= Portfolio Details ======= -->
     <div id="portfolio-details" class="portfolio-details">
@@ -54,13 +91,15 @@
           <div class="col-lg-8">
             <h2 class="portfolio-title">{{project.title}}</h2>
 
-            <div class="portfolio-details-slider swiper">
+            <div class="portfolio-details-slider swiper" role="img" aria-label="{{project.title}} screenshots">
               <div class="swiper-wrapper align-items-center">
 
                 {% for thumbnails in project.projectthumbnail.all|slice:"1:" %}
                 <div class="swiper-slide">
-                  <img src="{{thumbnails.image.url}}" class="thumbnails" alt="">
+                  <img src="{{thumbnails.image.url}}" class="thumbnails" alt="{{project.title}}">
                 </div>
+                {% empty %}
+                <p>No screenshots available.</p>
                 {% endfor %}
 
               </div>
@@ -69,21 +108,28 @@
 
           </div>
 
-          <div class="col-lg-4 portfolio-info">
+          <div class="col-lg-4 portfolio-info my-auto p-0 ps-3">
             <h3>Project information</h3>
             <ul>
               <li><strong>Category</strong>: {{project.category}}</li>
               <li><strong>Client</strong>: {{project.client}}</li>
-              <li><strong>Project date</strong>: {{project.date|date:"M d, Y"}}</li>
+              <li><strong>Project date</strong>: <time datetime="{{project.date|date:'c'}}">{{project.date|date:"M d, Y"}}</time></li>
               <li><strong>Tools</strong>: {% for tool in project.tools.all %}
                 {{tool.name}} {% if not forloop.last %}|{% endif %}
                 {% endfor %}</li>
-              <li><strong>Live URL</strong>: <a href="{{project.live_url}}" targert="_blank">{{project.live_url}}</a></li>
+              
+              {% if project.live_url %}
+              <li><strong>Live url</strong>: <a href="{{project.live_url}}" rel="noopener" target="_blank">{{project.live_url}}</a></li>
+                {% if project.github_repo %}
+                <li><strong>View code</strong>: <a href="{{project.github_repo}}" rel="noopener" target="_blank">{{project.github_repo}}</a></li>
+                {% endif %}
+              {% endif %}
             </ul>
 
-            <p>
-              {{project.description}}
-            </p>
+            <div>
+              <strong class="">Description</strong>
+              <p class="mb-0 pt-0">{{project.description}}</p>
+            </div>
           </div>
 
         </div>

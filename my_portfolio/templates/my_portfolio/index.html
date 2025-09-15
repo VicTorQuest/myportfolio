@@ -7,41 +7,110 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Victor Okolie - Backend Web Developer</title>
-  <meta content="victor, okolie, victor okolie, portfolio, web developer, backend, backend web developer, backend web development, django developer, django" name="keywords">
-  
+  <title>Victor Okolie – Full-Stack Developer & Blockchain Engineer</title>
+  <meta name="description" content="Full-Stack Web Developer and Blockchain Engineer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3.">
+  <meta name="keywords" content="victor okolie, quest, quest codes, quest coding, backend developer, django developer, python developer, software engineer, web developer, website developer, api development, database design, nigeria developer, freelance developer, portfolio">
+  <meta name="author" content="Victor Okolie">
+  <meta name="robots" content="index, follow">
   <!-- Open graph meta tags -->
 
-  <meta property="og:title" content="Victor Okolie - Backend Web Developer">
-  <meta property="og:type" content="Portfolio website">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="{{request.build_absolute_uri}}">
-  <meta property="og:image" content="{% static 'og-img.png' %}">
-
-  <meta property="og:description" content="Hi there, I'm Victor Okolie a Backend Web Developer and Software Engineer">
-  <meta property="og:video" content="{% static 'og-image.gif' %}" />
-  <meta property="og:video:width" content="400" />
-  <meta property="og:video:height" content="300" />
+  <meta property="og:title" content="Victor Okolie – Full-Stack Developer & Blockchain Engineer">
+  <meta property="og:description" content="Full-Stack Web Developer and Blockchain Engineer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3.">
+  <meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{% static 'og-image.png' %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Victor Okolie's Portfolio">
+  <meta property="og:locale" content="en_US">
 
   <!-- twitter cards -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="{{request.build_absolute_uri}}">
+  <meta name="twitter:title" content="Victor Okolie – Full-Stack Developer & Blockchain Engineer">
+  <meta name="twitter:description" content="Full-Stack Web Developer and Blockchain Engineer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3." />
+  <meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{% static 'og-image.png' %}" />
   <meta name="twitter:site" content="@victorokolie_" />
-  <meta name="twitter:title" content="Victor Okolie - Backend Web Developer" />
-  <meta name="twitter:description" content="Hi there, I'm Victor Okolie a Backend Web Developer and Software Engineer" />
-  <meta name="twitter:image" content="{% static 'og-img.png' %}" />
+  <meta name="twitter:creator" content="@victorokolie_">
 
-  <link rel="canonical" href="{{request.path}}">
+
+  <link rel="canonical" href="{{request.build_absolute_uri}}">
   <link rel="home" href="{% url 'index' %}">
+
   <!-- Favicons -->
   <link href="{%static 'favicon.ico' %}" rel="icon">
+
+  <!-- Preload critical resource  -->
+  <link rel="preload" href="{% static 'my_portfolio/css/style.css' %}" as="style">
   
-  <!--  CSS Files -->
+  <!-- Critical CSS (load synchronously) -->
   <link href="{% static 'my_portfolio/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href=" {% static 'my_portfolio/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'my_portfolio/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-  <link href="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="{% static 'my_portfolio/css/style.css' %}" rel="stylesheet">
+
+  <!-- Non-critical CSS (load asynchronously) -->
+  <link href="{% static 'my_portfolio/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="{% static 'my_portfolio/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet" media="print" onload="this.media='all'">
+  
+  <noscript>
+    <link href="{% static 'my_portfolio/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'my_portfolio/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  </noscript>
+
+
+   <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Victor Okolie",
+      "jobTitle": "Backend Developer",
+      "description": "Experienced Backend Developer & Software Engineer specializing in Django, Python, javascript, solidity and scalable web applications",
+      "url": "{{request.build_absolute_uri}}",
+      "image": "{{request.scheme}}://{{request.get_host}}{% if my_portfolio.image %}{{my_portfolio.image.url}}{% else %}{% static 'og-image.png' %}{% endif %}",
+      "email": "{% if my_portfolio.user.email %}{{my_portfolio.user.email}}{% endif %}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{% if my_portfolio.address %}{{my_portfolio.address}}{% endif %}"
+      },
+      "sameAs": [
+        "{% if my_portfolio.linkedin %}{{my_portfolio.linkedin}}{% endif %}",
+        "{% if my_portfolio.github %}{{my_portfolio.github}}{% endif %}",
+        "{% if my_portfolio.twitter %}{{my_portfolio.twitter}}{% endif %}"
+        "{% if my_portfolio.twitter %}{{my_portfolio.instagram}}{% endif %}"
+      ],
+      "knowsAbout": [
+        "Backend Development",
+        "Django",
+        "Python",
+        "Web Development",
+        "API Development",
+        "Database Design",
+        "Software Engineering"
+        "Smart Contract Development",
+        "Solidity",
+        "Web 3"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Victor Okolie Portfolio",
+      "url": "{{request.build_absolute_uri}}",
+      "author": {
+        "@type": "Person",
+        "name": "Victor Okolie"
+      },
+      "description": "Professional portfolio showcasing backend development projects, experience, and services"
+    }
+    </script>
+
 
   <!-- Template Main CSS File -->
-  <link href="{% static 'my_portfolio/css/style.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -51,31 +120,32 @@
     <div class="loader"></div>
   </div>
   <!-- ======= Header ======= -->
-  <header id="header">
+  <header id="header" role="banner">
     <div class="container">
 
-      <h1><a href="{% url 'index' %}">Victor Okolie</a></h1>
-      <h2>I'm a well-rounded <span>Backend Web Developer</span> and <span>Software Engineer</span> from Nigeria, I build web apps using the current and <span>efficient</span> technologies with a logical approach</h2>
+      <h1><a href="{% url 'index' %}" rel="home">Victor Okolie</a></h1>
+      <h2 class="lead">I’m a <strong>Full-Stack Web Developer</strong> and Blockchain Engineer, building scalable websites, robust <strong>Backend Systems</strong>, SEO-optimized solutions, and <strong>Smart Contracts</strong> for web 3.</h2>
+      <!-- <h2>I'm a well-rounded <span>Backend Web Developer</span> and <span>Software Engineer</span> from Nigeria, I build web apps using the current and <span>efficient</span> technologies with a logical approach</h2> -->
 
-      <nav id="navbar" class="navbar">
+      <nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
         <ul>
-          <li><a class="nav-link active" href="#header">Home</a></li>
+          <li><a class="nav-link active" href="#header" aria-current="page">Home</a></li>
+          <li><a class="nav-link" href="#projects">Projects</a></li>
           <li><a class="nav-link" href="#about">About</a></li>
           <li><a class="nav-link" href="#resume">Experience</a></li>
-          <li><a class="nav-link" href="#projects">Projects</a></li>
           <li><a class="nav-link" href="#services">Services</a></li>
           <li><a class="nav-link" href="#blog">Blog</a></li>
           <li><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
+        <i class="bi bi-list mobile-nav-toggle" aria-label="Toggle mobile navigation" aria-expanded="false"></i>
       </nav><!-- .navbar -->
 
-      <div class="social-links">
-        <a href="{{my_portfolio.twitter}}" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="{{my_portfolio.instagram}}" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="{{my_portfolio.discord}}" target="_blank" class="facebook"><i class="bi bi-discord"></i></a>
-        <a href="{{my_portfolio.linkedin}}" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
-        <a href="{{my_portfolio.github}}" target="_blank" class="github"><i class="bi bi-github"></i></a>
+      <div class="social-links" role="complementary" aria-label="Social media links">
+        <a href="{{my_portfolio.twitter}}" target="_blank" rel="noopener" class="twitter" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+        <a href="{{my_portfolio.instagram}}" target="_blank" rel="noopener" class="instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="{{my_portfolio.discord}}" target="_blank" rel="noopener" class="discord" aria-label="Discord"><i class="bi bi-discord"></i></a>
+        <a href="{{my_portfolio.linkedin}}" target="_blank" rel="noopener" class="linkedin" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="{{my_portfolio.github}}" target="_blank" rel="noopener" class="github" aria-label="GitHub"><i class="bi bi-github"></i></a>
       </div>
 
     </div>
@@ -94,7 +164,7 @@
 
       <div class="row">
         <div class="col-lg-4 mt-2" data-aos="fade-right">
-          <img src="{{my_portfolio.image.url}}" class="img-fluid" alt="">
+          <img src="{{my_portfolio.image.url}}" loading="lazy" class="img-fluid" alt="Victor Okolie's photo">
         </div>
         <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
           <h3>{{my_portfolio.category}}</h3>
@@ -123,7 +193,7 @@
         {% for tool in tools %}
           <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
-              <img src="{{tool.image}}" class="me-2">
+              <img src="{{tool.image}}" alt="{{tool.name}}" loading="lazy" class="me-2">
               <h3>{{tool.name}}</h3>
             </div>
           </div>
@@ -144,17 +214,21 @@
           {% for feedback in feedbacks %}
           <div class="swiper-slide">
             <div class="testimonial-item">
-              <p>
-                <i class="bi bi-quote quote-icon-left"></i>
-                {{feedback.feedback}}
-                <i class="bi bi-quote quote-icon-right"></i>
-                
-              </p>
+              <blockquote>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  {{feedback.feedback}}
+                  <i class="bi bi-quote quote-icon-right"></i>
+                  
+                </p>
+              </blockquote>
               {% if feedback.image %}
-              <img src="{{feedback.image.url}}" loading="lazy" class="testimonial-img" alt="{{feedback.name}}'s photo">
+              <img src="{{feedback.image.url}}" loading="lazy" class="testimonial-img" alt="{{feedback.name}}, client">
               {% endif %}
-              <h3>{{feedback.name}}</h3>
-              <h4 class="fst-italic">{{feedback.email}}</h4>
+              <cite>
+                <h3>{{feedback.name}}</h3>
+                <h4 class="fst-italic">{{feedback.email}}</h4>
+              </cite>
             </div>
           </div><!-- End testimonial item -->
           {% endfor %}
@@ -173,18 +247,21 @@
           {% csrf_token %}
           <div class="row">
             <div class="col-md-6 form-group">
+              <label for="client-name" class="visually-hidden">Your Name</label>
               <input type="text" name="name" class="form-control" id="client-name" placeholder="Your Name" required>
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
+              <label for="client-email" class="visually-hidden">Your Email</label>
               <input type="email" class="form-control" name="email" id="client-email" placeholder="Your Email" required>
             </div>
           </div>
           <div class="form-group mt-3">
+            <label for="feedback-message" class="visually-hidden">Your Feedback</label>
             <textarea class="form-control" name="message" rows="5" placeholder="Feedback" id="feedback-message" maxlength="200" required></textarea>
           </div>
           <div class="form-group mt-3">
-            <label for="image" class="fs-6 text-secondary mb-2">A photo of you</label>
-            <input type="file" placeholder="image" accept="image/x-png,image/gif,image/jpeg" placeholder="A photo of you" class="form-control p-3 ps-4" name="image">
+            <label for="image" class="fs-6 text-secondary mb-2">A photo of you (optional)</label>
+            <input type="file" id="image" placeholder="image" accept="image/x-png,image/gif,image/jpeg" placeholder="A photo of you" class="form-control p-3 ps-4" name="image">
           </div>
 
           <div class="my-3">
@@ -283,13 +360,13 @@
         {% for project in projects %}
         <div class="col-lg-4 col-md-6 portfolio-item filter-{{project.category}}">
           <div class="portfolio-wrap">
-            <img src="{{project.projectthumbnail.all.0.image.url}}" class="img-fluid" alt="">
+            <img src="{{project.first_thumbnail}}" loading="lazy" class="img-fluid" alt="{{project.title}}">
             <div class="portfolio-info">
               <h4>{{project.title}}</h4>
               <p>{{project.category}}</p>
               <div class="portfolio-links mt-2">
-                <a href="{{project.github_repo}}" target="_blank" title="Code"><i class="bi bi-code-slash"></i></a>
-                <a href="{% url 'project_detail' project.slug %}" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Project Details"><i class="bi bi-eye"></i></a>
+                <a href="{{project.github_repo}}" target="_blank" rel="noopener" title="View {{project.title}} source code"><i class="bi bi-code-slash"></i></a>
+                <a href="{% url 'project_detail' project.slug %}" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="View {{project.title}} details"><i class="bi bi-eye"></i></a>
               </div>
             </div>
           </div>
@@ -338,9 +415,12 @@
 
       <br>
 
-      <center><div class="spinner-border align-items-center justify-content-center" id="blogLoader" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div></center>
+
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" id="blogLoader" role="status" aria-label="Loading blog posts">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
       
       
 
@@ -378,11 +458,11 @@
             <div class="social-links">
   
 
-              <a href="{{my_portfolio.twitter}}" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
-              <a href="{{my_portfolio.instagram}}" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="{{my_portfolio.discord}}" target="_blank" class="facebook"><i class="bi bi-discord"></i></a>
-              <a href="{{my_portfolio.linkedin}}" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              <a href="{{my_portfolio.github}}" target="_blank" class="github"><i class="bi bi-github"></i></a>
+              <a href="{{my_portfolio.twitter}}" target="_blank" rel="noopener" class="twitter" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+              <a href="{{my_portfolio.instagram}}" target="_blank" rel="noopener" class="instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="{{my_portfolio.discord}}" target="_blank" rel="noopener" class="discord" aria-label="Discord"><i class="bi bi-discord"></i></a>
+              <a href="{{my_portfolio.linkedin}}" target="_blank" rel="noopener" class="linkedin" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+              <a href="{{my_portfolio.github}}" target="_blank" rel="noopener" class="github" aria-label="GitHub"><i class="bi bi-github"></i></a>
             </div>
           </div>
         </div>
@@ -410,22 +490,23 @@
         {% csrf_token %}
         <div class="row">
           <div class="col-md-6 form-group">
+            <label for="name" class="visually-hidden">Your Name</label>
             <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
           </div>
           <div class="col-md-6 form-group mt-3 mt-md-0">
+            <label for="email" class="visually-hidden">Your Email</label>
             <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
           </div>
         </div>
         <div class="form-group mt-3">
+          <label for="subject" class="visually-hidden">Subject</label>
           <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
         </div>
         <div class="form-group mt-3">
+          <label for="message" class="visually-hidden">Your Message</label>
           <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
         </div>
-        <div class="my-3" id="status-message">
-          
-          <!-- <div class="error-message" id="error-feedback"></div> -->
-        </div>
+        <div class="my-3" id="status-message"></div>
         <div class="text-center"><button type="submit" id="submitEmailBtn">Send Message</button></div>
       </form>
 
@@ -433,19 +514,11 @@
   </section><!-- End Contact Section -->
 
 
-  <a href="{{my_portfolio.resume.url}}" class="resume-icon" data-toggle="tooltip" title="View Resume"download target="_blank" ><i class="bi bi-file-earmark-person"></i></a>
+  <a href="{{my_portfolio.resume.url}}" class="resume-icon" data-toggle="tooltip" title="View Resume" download target="_blank" rel="noopener"><i class="bi bi-file-earmark-person"></i></a>
 
 
   <script src="{% static 'my_portfolio/vendor/jquery/jquery-3.6.0.js' %}"></script>
-  
-  <!-- Vendor JS Files -->
-  <!-- <script src="{% static 'my_portfolio/vendor/purecounter/purecounter.js' %}"></script> -->
-  <script src="{% static 'my_portfolio/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'my_portfolio/vendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'my_portfolio/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-  <script src="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'my_portfolio/vendor/waypoints/noframework.waypoints.js' %}"></script>
-  <script src="{% static 'my_portfolio/vendor/particles-js/particles.min.js' %}"></script>
+
   <script>
     $(window).on('load', function () {
       setTimeout(() => {
@@ -454,19 +527,19 @@
     })
    
   </script>
-
+  
+  <!-- Vendor JS Files -->
+  <script defer src="{% static 'my_portfolio/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script defer src="{% static 'my_portfolio/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script defer src="{% static 'my_portfolio/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script defer src="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script defer src="{% static 'my_portfolio/vendor/particles-js/particles.min.js' %}"></script>
   
 
   <!-- Template Main JS File -->
-  <script src="{% static 'my_portfolio/js/main.js' %}"></script>
-  <script src="{% static 'my_portfolio/js/custom-particles.js' %}"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-    });
-</script>
+  <script defer src="{% static 'my_portfolio/js/main.js' %}"></script>
 
-  <script>
+  <script defer>
     // using jQuery
     function getCookie(name) {
         var cookieValue = null;
@@ -499,8 +572,7 @@
     });
   </script>
 
-  <script src="{% static 'my_portfolio/js/form.js' %}"></script>
-  <script src="{% static 'my_portfolio/js/get-blog-posts.js' %}"></script>
+  <script defer src="{% static 'my_portfolio/js/form.js' %}"></script>
 
 
 </body>

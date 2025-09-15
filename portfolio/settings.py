@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #my apps
-    "my_portfolio",
+    "my_portfolio.apps.MyPortfolioConfig",
 
     # installed
     'ckeditor',
@@ -149,9 +149,20 @@ AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 
+STORAGES = {
+    # this controls what `default_storage` and FileField/File.upload_to use
+    "default": {
+        "BACKEND": "portfolio.storages.MediaStore",
+    },
+    # this controls what `collectstatic` and static‐file serving use
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 if DEBUG:
     MEDIA_URL = 'media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -178,8 +189,31 @@ CKEDITOR_CONFIGS = {
 }
 
 
+# Default cache: use Redis if available, else local memory
+if os.getenv("REDIS_URL"):  # Production (Render)
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.getenv("REDIS_URL"),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "CONNECTION_POOL_KWARGS": {"max_connections": 100},
+                "IGNORE_EXCEPTIONS": True,  # Fail silently if Redis is down
+            }
+        }
+    }
+else:  # Local dev fallback
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "unique-snowflake",
+        }
+    }
+
+
 # Only enable WhiteNoise in production (DEBUG = False)
 if not DEBUG:
+    MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.us-east-1.amazonaws.com/media/"
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')  # Add WhiteNoise after SecurityMiddleware
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

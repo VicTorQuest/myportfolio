@@ -28,7 +28,7 @@ sitmaps = {
 }
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('portfolioadmin/', admin.site.urls),
     path('', include('my_portfolio.urls')),
     path('sitemap.xml/', sitemap, {'sitemaps': sitmaps}),
     path('robots.txt', robots_txt, name='robots.txt')
