@@ -176,6 +176,8 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
+RECAPTCHA_SECRET_KEY = os.getenv('reCAPTCHA_SECRET_KEY')
+
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',

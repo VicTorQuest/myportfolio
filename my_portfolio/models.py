@@ -67,6 +67,7 @@ class Project(models.Model):
     live_url = models.URLField()
     github_repo = models.URLField()
     client = models.CharField(max_length=50, default="Personal")
+    role = models.CharField(max_length=50, default="Backend Developer")
     slug = models.SlugField(unique=True)
     date = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)

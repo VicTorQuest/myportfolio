@@ -194,7 +194,7 @@ h1, h2, h3, h4, h5, h6, #header .lead {
   right: 0;
   background: rgba(0, 0, 0, 0.9);
 }
-#header.header-top .social-links, #header.header-top h2 {
+#header.header-top .social-links, #header.header-top p,  #header.header-top .cta-buttons {
   display: none;
 }
 #header.header-top h1 {
@@ -469,6 +469,11 @@ section .container {
 }
 .about-me .content p:last-child {
   margin-bottom: 0;
+}
+
+.tools .icon-box img {
+  width: 32px;
+  height: 32px;
 }
 
 /*--------------------------------------------------------------
@@ -1130,7 +1135,7 @@ section .container {
 .contact .php-email-form textarea, .feedback .php-email-form textarea {
   padding: 12px 15px;
 }
-.contact .php-email-form button[type=submit], .feedback .php-email-form button[type=submit] {
+.contact .php-email-form button, .feedback .php-email-form button {
   background: #1bc4f8;
   border: 0;
   padding: 10px 30px;
@@ -1252,3 +1257,58 @@ section .container {
   color: inherit !important;
 }
 
+.cta-buttons {
+  margin-top: 2rem;
+  display: flex;
+}
+
+.cta-buttons .btn {
+  padding: 12px 24px;
+  font-weight: 600;
+  border-radius: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.cta-buttons .btn-primary {
+  background: linear-gradient(45deg, #1bc4f8, #048eb9);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.cta-buttons .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.cta-buttons .btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.cta-buttons .nav-link.btn {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cta-buttons .nav-link.btn:hover {
+  color: inherit;
+}
+
+@media (max-width: 768px) {
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cta-buttons {
+width: 100%;
+}
+  
+  .cta-buttons .btn {
+    width: 100%;
+    margin: 0;
+  }
+}

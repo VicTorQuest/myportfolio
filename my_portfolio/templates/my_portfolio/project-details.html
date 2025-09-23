@@ -66,6 +66,7 @@
     "author": {
       "@type": "Person",
       "name": "Victor Okolie",
+      "roleName": "{{project.role}}"
       "url": "{{request.scheme}}://{{request.get_host}}{% url 'index' %}"
     },
     "datePublished": "{{project.date|date:'c'}}",
@@ -113,6 +114,7 @@
             <ul>
               <li><strong>Category</strong>: {{project.category}}</li>
               <li><strong>Client</strong>: {{project.client}}</li>
+              <li><strong>Role</strong>: {{project.role}}</li>
               <li><strong>Project date</strong>: <time datetime="{{project.date|date:'c'}}">{{project.date|date:"M d, Y"}}</time></li>
               <li><strong>Tools</strong>: {% for tool in project.tools.all %}
                 {{tool.name}} {% if not forloop.last %}|{% endif %}
@@ -142,12 +144,27 @@
 
   <!-- Vendor JS Files -->
   <script src="{% static 'my_portfolio/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'my_portfolio/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <!-- <script src="{% static 'my_portfolio/vendor/glightbox/js/glightbox.min.js' %}"></script> -->
   <script src="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.js' %}"></script>
 
   <!-- Template Main JS File -->
+   <script>
+    new Swiper('.portfolio-details-slider', {
+    speed: 400,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    }
+  });
+   </script>
 
-  <script src="{% static 'my_portfolio/js/main.js' %}"></script>
+  <!-- <script src="{% static 'my_portfolio/js/main.js' %}"></script> -->
 
 </body>
 

@@ -1,6 +1,7 @@
 import json
 import os
 import requests
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.mail import send_mail, EmailMessage
@@ -94,9 +95,30 @@ def project_detail(request, slug):
     return render(request, 'my_portfolio/project-details.html', context)
 
 def submit_feedback(request):
-    my_user = User.objects.filter(username='Victor').first()
     if request.method == 'POST':
+        # Verify reCAPTCHA first
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+
+        if not recaptcha_response:
+            return JsonResponse({'message': 'CAPTCHA verification required', 'error': True})
+        
         try:
+            # Verify with Google
+            data = {
+                'secret': settings.RECAPTCHA_SECRET_KEY,  # From Google Console
+                'response': recaptcha_response
+            }
+            
+            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+            result = r.json()
+            
+            if not result.get('success'):
+                return JsonResponse({'message': 'CAPTCHA verification failed', 'error': True})
+        except:
+            return JsonResponse({'message': 'Verification service unavailable. Please try again.', 'error': True})
+
+        try:
+            my_user = User.objects.filter(username='Victor').first()
             name =request.POST.get('name')
             email = request.POST.get('email')
             feedback = request.POST.get('message')
@@ -112,19 +134,37 @@ def submit_feedback(request):
 def submit_email(request):
     my_user = User.objects.filter(username='Victor').first()
     if request.method == 'POST':
+        # Verify reCAPTCHA
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        if not recaptcha_response:
+            return JsonResponse({'message': 'CAPTCHA verification required', 'error': True})
+        
         try:
+            data = {
+                'secret': settings.RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+            
+            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data, timeout=10)
+            result = r.json()
+            
+            if not result.get('success'):
+                return JsonResponse({'message': 'CAPTCHA verification failed', 'error': True})
+            
+            # Process email if CAPTCHA passes
             name = request.POST.get('name')
             email = request.POST.get('email')
-            subject = request.POST.get('subject')
+            subject = f"Message from {name}"
             email_msg = request.POST.get('message')
             mail = EmailMessage('Message from {}: {}'.format(name, subject), email_msg, email, [my_user.email], reply_to=[email])
             mail.send()
-            send_mail(subject, email_msg, email, [my_user.email], fail_silently=False)
             message = "Your email was sent successfully, thank you"
             return JsonResponse({'message': message, 'success': True})
-        except:
-            message = "Email was unsuccessful, try again later"
-            return JsonResponse({'message': message, 'error': True})
+            
+        except requests.RequestException:
+            return JsonResponse({'message': 'Verification service unavailable', 'error': True})
+        except Exception:
+            return JsonResponse({'message': 'Email was unsuccessful, try again later', 'error': True})
 
 def get_blog_posts(request):
     blog_api_token = os.environ.get('blog_api_token')

@@ -77,19 +77,21 @@
       "sameAs": [
         "{% if my_portfolio.linkedin %}{{my_portfolio.linkedin}}{% endif %}",
         "{% if my_portfolio.github %}{{my_portfolio.github}}{% endif %}",
-        "{% if my_portfolio.twitter %}{{my_portfolio.twitter}}{% endif %}"
-        "{% if my_portfolio.twitter %}{{my_portfolio.instagram}}{% endif %}"
+        "{% if my_portfolio.twitter %}{{my_portfolio.twitter}}{% endif %}",
+        "{% if my_portfolio.instagram %}{{my_portfolio.instagram}}{% endif %}"
       ],
       "knowsAbout": [
         "Backend Development",
         "Django",
         "Python",
         "Web Development",
+        "Search Engine Optimiztion"
         "API Development",
         "Database Design",
-        "Software Engineering"
+        "Software Engineering",
         "Smart Contract Development",
         "Solidity",
+        "Hardhat".
         "Web 3"
       ]
     }
@@ -124,7 +126,16 @@
     <div class="container">
 
       <h1><a href="{% url 'index' %}" rel="home">Victor Okolie</a></h1>
-      <h2 class="lead">I’m a <strong>Full-Stack Web Developer</strong> and Blockchain Engineer, building scalable websites, robust <strong>Backend Systems</strong>, SEO-optimized solutions, and <strong>Smart Contracts</strong> for web 3.</h2>
+      <p class="lead">I’m a <strong>Full-Stack Web Developer</strong> and Blockchain Engineer, building scalable websites, robust <strong>Backend Systems</strong>, SEO-optimized solutions, and <strong>Smart Contracts</strong> for web 3.</p>
+      <div class="cta-buttons d-md-none mt-4">
+        <a href="#projects" class="btn btn-primary btn-lg me-3">
+          <i class="bi bi-eye"></i> See My Works
+        </a>
+        <a href="#hireMe" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-person-check"></i> Hire Me
+        </a>
+      </div>
+
       <!-- <h2>I'm a well-rounded <span>Backend Web Developer</span> and <span>Software Engineer</span> from Nigeria, I build web apps using the current and <span>efficient</span> technologies with a logical approach</h2> -->
 
       <nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
@@ -134,8 +145,8 @@
           <li><a class="nav-link" href="#about">About</a></li>
           <li><a class="nav-link" href="#resume">Experience</a></li>
           <li><a class="nav-link" href="#services">Services</a></li>
-          <li><a class="nav-link" href="#blog">Blog</a></li>
-          <li><a class="nav-link" href="#contact">Contact</a></li>
+          <!-- <li><a class="nav-link" href="#blog">Blog</a></li> -->
+          <li><a class="nav-link" href="#hireMe">Hire Me</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle" aria-label="Toggle mobile navigation" aria-expanded="false"></i>
       </nav><!-- .navbar -->
@@ -164,7 +175,11 @@
 
       <div class="row">
         <div class="col-lg-4 mt-2" data-aos="fade-right">
-          <img src="{{my_portfolio.image.url}}" loading="lazy" class="img-fluid" alt="Victor Okolie's photo">
+          {% if my_portfolio.image %}
+            <img src="{{my_portfolio.image.url}}" loading="lazy" class="img-fluid" alt="Victor Okolie's photo">
+          {% else %}
+            <img src="{% static 'default-avatar.png' %}" loading="lazy" class="img-fluid" alt="Default profile picture">
+          {% endif %}
         </div>
         <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
           <h3>{{my_portfolio.category}}</h3>
@@ -189,7 +204,7 @@
       
 
         
-      <div class="row">
+      <div class="row tools justify-content-center">
         {% for tool in tools %}
           <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
@@ -209,6 +224,7 @@
         <h2>Client Feedback</h2>
       </div>
 
+      {% if feedbacks %}
       <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper-wrapper">
           {% for feedback in feedbacks %}
@@ -219,7 +235,6 @@
                   <i class="bi bi-quote quote-icon-left"></i>
                   {{feedback.feedback}}
                   <i class="bi bi-quote quote-icon-right"></i>
-                  
                 </p>
               </blockquote>
               {% if feedback.image %}
@@ -230,13 +245,14 @@
                 <h4 class="fst-italic">{{feedback.email}}</h4>
               </cite>
             </div>
-          </div><!-- End testimonial item -->
+          </div>
           {% endfor %}
-          
-
         </div>
         <div class="swiper-pagination"></div>
       </div>
+      {% else %}
+      <p class="text-center">No feedback yet</p>
+      {% endif %}
 
       <div class="owl-carousel testimonials-carousel">
 
@@ -247,17 +263,17 @@
           {% csrf_token %}
           <div class="row">
             <div class="col-md-6 form-group">
-              <label for="client-name" class="visually-hidden">Your Name</label>
-              <input type="text" name="name" class="form-control" id="client-name" placeholder="Your Name" required>
+              <label for="clientName" class="visually-hidden">Your Name</label>
+              <input type="text" name="name" class="form-control" id="clientName" placeholder="Your Name" required>
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
-              <label for="client-email" class="visually-hidden">Your Email</label>
-              <input type="email" class="form-control" name="email" id="client-email" placeholder="Your Email" required>
+              <label for="clientEmail" class="visually-hidden">Your Email</label>
+              <input type="email" class="form-control" name="email" id="clientEmail" placeholder="Your Email" required>
             </div>
           </div>
           <div class="form-group mt-3">
-            <label for="feedback-message" class="visually-hidden">Your Feedback</label>
-            <textarea class="form-control" name="message" rows="5" placeholder="Feedback" id="feedback-message" maxlength="200" required></textarea>
+            <label for="feedbackMessage" class="visually-hidden">Your Feedback</label>
+            <textarea class="form-control" name="message" rows="5" placeholder="Feedback" id="feedbackMessage" maxlength="200" required></textarea>
           </div>
           <div class="form-group mt-3">
             <label for="image" class="fs-6 text-secondary mb-2">A photo of you (optional)</label>
@@ -268,7 +284,7 @@
             <div  id="error-feedback"></div>
             <div id="feedback-sent"></div>
           </div>
-          <div class="text-center"><button type="submit" id='feedbackFormBtn'>Send Message</button></div>
+          <div class="text-center"><button id='feedbackFormBtn' class="g-recaptcha" data-sitekey="6LcR3swrAAAAAH0jpZMarx78HVh8h1ssPr011Mul" data-callback="onSubmit" data-size="invisible">Send Message</button></div>
         </form>
       </div>
     </div><!-- End Testimonials  -->
@@ -428,28 +444,18 @@
   </section><!-- End Resume Section -->
 
 
-  <!-- ======= Contact Section ======= -->
-  <section id="contact" class="contact">
+  <!-- ======= Hire Me Section ======= -->
+  <section id="hireMe" class="contact">
     <div class="container">
 
       <div class="section-title">
-        <h2>Contact Me</h2>
+        <h2>Hire Me</h2>
         <p>Get In Touch</p>
       </div>
       <p class="mt-3 mb-4 contact-p">You have an awesome idea you want me to jump on or just want to say hi? Feel free to contact me. However, Please don't spam me :)</p>
       <div class="row mt-2">
 
         <div class="col-md-6 d-flex align-items-stretch">
-          <div class="info-box">
-            <div class="icon">
-              <i class="bi bi-geo-alt bx"></i>
-            </div>
-            <h3>My Address</h3>
-            <p>{{my_portfolio.address}}</p>
-          </div>
-        </div>
-
-        <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-stretch">
           <div class="info-box">
             <div class="icon">
               <i class="bi bi-share bx"></i>
@@ -467,22 +473,13 @@
           </div>
         </div>
 
-        <div class="col-md-6 mt-4 d-flex align-items-stretch">
+        <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-stretch">
           <div class="info-box">
             <div class="icon">
               <i class="bi bi-envelope-at bx"></i>
             </div>
             <h3>Email Me</h3>
             <p>{{my_portfolio.user.email}}</p>
-          </div>
-        </div>
-        <div class="col-md-6 mt-4 d-flex align-items-stretch">
-          <div class="info-box">
-            <div class="icon">
-              <i class="bi bi-telephone-plus bx"></i>
-            </div>
-            <h3>Call Me</h3>
-            <p>{{my_portfolio.phone_number}}</p>
           </div>
         </div>
       </div>
@@ -499,19 +496,15 @@
           </div>
         </div>
         <div class="form-group mt-3">
-          <label for="subject" class="visually-hidden">Subject</label>
-          <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-        </div>
-        <div class="form-group mt-3">
           <label for="message" class="visually-hidden">Your Message</label>
-          <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+          <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message" required></textarea>
         </div>
         <div class="my-3" id="status-message"></div>
-        <div class="text-center"><button type="submit" id="submitEmailBtn">Send Message</button></div>
+        <div class="text-center"><button id="submitEmailBtn" class="g-recaptcha" data-sitekey="6LcR3swrAAAAAH0jpZMarx78HVh8h1ssPr011Mul" data-callback="onEmailSubmit" data-size="invisible">Send Message</button></div>
       </form>
 
     </div>
-  </section><!-- End Contact Section -->
+  </section><!-- End Hire Me Section -->
 
 
   <a href="{{my_portfolio.resume.url}}" class="resume-icon" data-toggle="tooltip" title="View Resume" download target="_blank" rel="noopener"><i class="bi bi-file-earmark-person"></i></a>
@@ -558,6 +551,7 @@
     }
 
     var csrftoken = getCookie('csrftoken');
+    const feedbackCount = parseInt("{{ feedbacks|length }}");
 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
@@ -572,7 +566,8 @@
     });
   </script>
 
-  <script defer src="{% static 'my_portfolio/js/form.js' %}"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script defer src="{% static 'my_portfolio/js/form.js' %}"></script>
 
 
 </body>

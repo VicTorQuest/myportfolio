@@ -29,5 +29,4 @@ def clear_portfolio_cache():
 @receiver(post_save, sender=ProjectCategory)
 @receiver(post_delete, sender=ProjectCategory)
 def clear_cache_on_change(sender, **kwargs):
-    print('cleaning cache')
     clear_portfolio_cache()

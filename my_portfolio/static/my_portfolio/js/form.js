@@ -1,108 +1,114 @@
-$(document).ready(function(){
-    /* feedback form */
-    $('#feedback-form').submit(function(event){
-        event.preventDefault()
-        function handleFeedbackInput(fieldname, message) {
+function handleFeedbackInput(fieldname, message) {
+    $('#feedback-sent').removeClass('d-block');
+    $('#error-feedback').addClass('d-block');
+    $('.form-control').css('border', 'none');
+    $(fieldname).css('border', '1px solid red');
+    $('#error-feedback').html(message);
+}
 
-            $('#feedback-sent').removeClass('d-block')
-            $('#error-feedback').addClass('d-block')
-            $('.form-control').css('border', 'none')
-            $(fieldname).css('border', '1px solid red')
-            $('#error-feedback').html(message)
-        }
+function validateFeedbackForm() {
+    if ($('#clientName').val() === "") {
+        handleFeedbackInput('#clientName', 'Please fill in your name');
+        return false;
+    }
+    if ($('#clientEmail').val() === "") {
+        handleFeedbackInput('#clientEmail', 'Please fill in the email field');
+        return false;
+    }
+    if ($('#feedbackMessage').val() === "") {
+        handleFeedbackInput('#feedbackMessage', 'Please input your feedback message');
+        return false;
+    }
+    return true;
+}
 
-
-        if ($(this)[0].name.value == "" || $(this)[0].name.value == null) {
-            return handleFeedbackInput('#client-name', 'Please fill in your name')
-        }
-
-        if ($(this)[0].email.value == "" || $(this)[0].name.value == null) {
-            return handleFeedbackInput('#client-email', 'Please fill in the email field')
-        }
-
-        if ($(this)[0].message.value == "" || $(this)[0].name.value == null) {
-            return handleFeedbackInput('#error-feedback', 'Please input your feedback message')
-        }
-        $('#feedbackFormBtn').html("Sending <span class='spinner-border spinner-border-sm' role='status'></span>")
-        $('#feedbackFormBtn').css('pointer-events', 'none')
-        $.ajax({
-            type: 'POST',
-            url: '/submit-feedback/',
-            data: new FormData(this),
-            processData: false,
-            contentType: false, 
-            success: handleFormSuccess,
-            error: handleFormError
-        })
-    })
+function onSubmit(token) {
+    $('#feedbackFormBtn').html("Sending <span class='spinner-border spinner-border-sm' role='status'></span>");
+    $('#feedbackFormBtn').css('pointer-events', 'none');
     
+    const formData = new FormData($('#feedback-form')[0]);
+    formData.append('g-recaptcha-response', token);
+    
+    $.ajax({
+        type: 'POST',
+        url: '/submit-feedback/',
+        data: formData,
+        processData: false,
+        contentType: false, 
+        success: handleFormSuccess,
+        error: handleFormError
+    });
+}
 
-    function handleFormSuccess(response){
-        if (response.success) {
-            $('#error-feedback').removeClass('d-block')
-            $('#feedbackFormBtn').css('pointer-events', '')
-            $('#feedbackFormBtn').html('Send Message')
-            $('#feedback-sent').addClass('d-block')
-            $('#feedback-sent').html(response.message)
-            $('.form-control').css('border', 'none')
-            $('#feedback-form')[0].reset()
-        }
-        else {
-            handleFormError(response)
-        }
-        
+function handleFormSuccess(response) {
+    if (response.success) {
+        $('#error-feedback').removeClass('d-block');
+        $('#feedbackFormBtn').css('pointer-events', '');
+        $('#feedbackFormBtn').html('Send Message');
+        $('#feedback-sent').addClass('d-block');
+        $('#feedback-sent').html(response.message);
+        $('.form-control').css('border', 'none');
+        $('#feedback-form')[0].reset();
+        grecaptcha.reset(); // Reset reCAPTCHA
+    } else {
+        handleFormError(response);
     }
+}
 
-    function handleFormError(response){
-        $('#feedback-sent').removeClass('d-block')
-        $('#feedbackFormBtn').css('pointer-events', '')
-        $('#feedbackFormBtn').html('Send Message')
-        $('#error-feedback').addClass('d-block')
-        $('.form-control').css('border', 'none')
-        $('#error-feedback').html(response.message)
-    }
+function handleFormError(response) {
+    $('#feedback-sent').removeClass('d-block');
+    $('#feedbackFormBtn').css('pointer-events', '');
+    $('#feedbackFormBtn').html('Send Message');
+    $('#error-feedback').addClass('d-block');
+    $('.form-control').css('border', 'none');
+    $('#error-feedback').html(response.message || "Can't submit comment right now");
+    grecaptcha.reset(); // Reset reCAPTCHA
+}
 
-    /* email form */
-    $('#email-form').submit(function(event){
-        event.preventDefault()
-
-        function handleEmailInput(fieldname, message) {
-            $('.form-control').css('border', 'none')
-            $(fieldname).css('border', '1px solid red')
-            $('#status-message').html(`<div class='alert error-message d-block alert-dismissible fade show' role='alert'>${message}<button type='button' class='btn-close text-white' data-bs-dismiss='alert' aria-label='Close'></button></div>`)
+$(document).ready(function(){
+    // Pre-validate before reCAPTCHA triggers
+    $('#feedbackFormBtn').click(function(e) {
+        if (!validateFeedbackForm()) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
         }
+    });
 
-        if ($(this)[0].name.value == "" || $(this)[0].name.value == null) {
-            return handleEmailInput('#name', 'Please input your name')
+     $('#submitEmailBtn').click(function(e) {
+        // Validate before reCAPTCHA triggers
+        if ($('#name').val() === "") {
+            handleEmailInput('#name', 'Please input your name');
+            return false;
         }
-
-        if ($(this)[0].email.value == "" || $(this)[0].email.value == null) {
-            return handleEmailInput('#email', 'Please fill in your email')
+        if ($('#email').val() === "") {
+            handleEmailInput('#email', 'Please fill in your email');
+            return false;
         }
-
-        if ($(this)[0].subject.value == "" || $(this)[0].subject.value == null) {
-            return handleEmailInput('#subject', 'State your subject')
+        if ($('#message').val() === "") {
+            handleEmailInput('#message', 'Input your message');
+            return false;
         }
+    });
+});
 
-        if ($(this)[0].message.value == "" || $(this)[0].message.value == null) {
-            return handleEmailInput('#message', 'Input your message')
-        }
+function onEmailSubmit(token) {
+    $('#submitEmailBtn').html("Sending <span class='spinner-border spinner-border-sm' role='status'></span>");
+    $('#submitEmailBtn').css('pointer-events', 'none');
+    
+    const formData = new FormData($('#email-form')[0]);
+    formData.append('g-recaptcha-response', token);
+    $.ajax({
+        type: 'POST',
+        url: '/submit-email/',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: EmailSuccessful,
+        error: EmailFailure
+    });
+}
 
-
-        $('#submitEmailBtn').html("Sending <span class='spinner-border spinner-border-sm' role='status'></span>")
-        $('#submitEmailBtn').css('pointer-events', 'none')
-
-        $.ajax({
-            type: 'POST',
-            url: '/submit-email/',
-            data: new FormData(this),
-            processData: false,
-            contentType: false,
-            success: EmailSuccessful,
-            error:  EmailFailure
-        })
-
-    })
     function EmailSuccessful(response) {
         if (response.success){
             $('#submitEmailBtn').css('pointer-events', '')
@@ -122,8 +128,3 @@ $(document).ready(function(){
         $('.form-control').css('border', 'none')
         $('#status-message').html(`<div class='alert error-message d-block alert-dismissible fade show' role='alert'>${response.message}<button type='button' class='btn-close text-white' data-bs-dismiss='alert' aria-label='Close'></button></div>`)
     }
-})  
-
- 
-
-
