@@ -14,7 +14,7 @@ python manage.py migrate
 echo "
 from django.contrib.auth import get_user_model;
 User = get_user_model();
-username = 'admin'
+username = 'Victor'
 email = 'admin@example.com'
 password = 'password'
 if not User.objects.filter(username=username).exists():
