@@ -102,15 +102,28 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=0,
-    )
-}
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default=os.environ.get("DATABASE_URL"),
+#         conn_max_age=0,
+#     )
+# }
+DB_POOLED = os.environ.get("DATABASE_URL_POOLED")
+DB_DIRECT = os.environ.get("NEON_DIRECT_URL") or os.environ.get("DATABASE_URL")
+
+
+if DB_POOLED:
+    DATABASES = {
+        "default": dj_database_url.config(default=DB_POOLED, conn_max_age=600, ssl_require=True)
+    }
+else:
+    # fallback: use whatever DATABASE_URL available (direct)
+    DATABASES = {
+        "default": dj_database_url.config(default=DB_DIRECT, conn_max_age=0, ssl_require=True)
+    }
+
 
 DATABASES["default"]["OPTIONS"] = {"options": "-c search_path=portfolio_schema"}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

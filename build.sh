@@ -4,11 +4,16 @@ set -o errexit
 # install dependencies
 pip install -r requirements.txt
 
+# Temporarily ensure migrations use the direct Neon URL if provided
+if [ -n "$NEON_DIRECT_URL" ]; then
+  export DATABASE_URL="$NEON_DIRECT_URL"
+fi
+
+# apply migrations
+python manage.py migrate --no-input
 # collect static files
 python manage.py collectstatic --no-input
 
-# apply migrations
-python manage.py migrate
 
 # create superuser if it doesn't exist
 echo "
