@@ -94,6 +94,9 @@ def project_detail(request, slug):
 
     return render(request, 'my_portfolio/project-details.html', context)
 
+def restart(request):
+    return HttpResponse("server is up and running", status=200)
+
 def submit_feedback(request):
     if request.method == 'POST':
         # Verify reCAPTCHA first
