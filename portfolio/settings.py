@@ -113,24 +113,6 @@ DATABASES = {
         ssl_require=True
     )
 }
-
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
-}
-
-
-
 # if DB_POOLED:
 #     DATABASES = {
 #         "default": dj_database_url.config(default=DB_POOLED, conn_max_age=600, ssl_require=True)
