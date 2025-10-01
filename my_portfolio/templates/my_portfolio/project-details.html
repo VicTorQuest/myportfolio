@@ -42,13 +42,13 @@
   <link href="{%static 'favicon.ico' %}"  rel="apple-touch-icon">
 
   <!-- Preload critical resource  -->
-  <link rel="preload" href="{% static 'my_portfolio/css/style.css' %}" as="style">
+  <link rel="preload" href="{% static 'my_portfolio/css/project-details.css' %}" as="style">
 
   <!--  CSS Files -->
   <link href="{% static 'my_portfolio/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
   
   <!-- Template Main CSS File -->
-  <link href="{% static 'my_portfolio/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'my_portfolio/css/project-details.css' %}" rel="stylesheet">
 
   <!-- Non-critical CSS (load asynchronously) -->
   <link href="{% static 'my_portfolio/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
@@ -56,17 +56,20 @@
 
   <!-- Structured Data for better SEO -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "mainEntity": {
     "@type": "CreativeWork",
     "name": "{{project.title}}",
+    "headline": "{{project.title}}",
     "description": "{{project.description|truncatechars:160}}",
     "url": "{{request.build_absolute_uri}}",
     "image": "{{request.scheme}}://{{request.get_host}}{{thumbnail_url}}",
     "author": {
       "@type": "Person",
       "name": "Victor Okolie",
-      "roleName": "{{project.role}}"
+      "jobTitle": "{{project.role}}",
       "url": "{{request.scheme}}://{{request.get_host}}{% url 'index' %}"
     },
     "datePublished": "{{project.date|date:'c'}}",
@@ -74,11 +77,35 @@
     "genre": "{{project.category.name}}",
     "programmingLanguage": [{% for tool in project.tools.all %}"{{tool.name}}"{% if not forloop.last %}, {% endif %}{% endfor %}]
   }
-  </script>
+}
+</script>
+
 
 </head>
 
 <body>
+
+  {% if not request.GET.lightbox   %}
+  <header id="header" class="py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1><a href="{% url 'index' %}" rel="home">Victor Okolie</a></h1>
+      <a href="{% url 'index' %}#projects" class="btn btn-outline-light btn-sm">
+        <i class="bi bi-arrow-left"></i> Back to Projects
+      </a>
+    </div>
+
+    <nav aria-label="breadcrumb" class="py-2">
+      <div class="container">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'index' %}#projects">Projects</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{project.title}}</li>
+        </ol>
+      </div>
+    </nav>
+  </header>
+  {% endif %}
+
 
   <main id="main">
 

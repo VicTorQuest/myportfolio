@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&display=swap');
+
+/*--------------------------------------------------------------
+# Portfolio Details
+--------------------------------------------------------------*/
+body {
+  font-family: 'Kumbh Sans', sans-serif;
+  background-color: #040404;
+  color: #fff;
+  position: relative;
+  background: transparent;
+
+}
+body::before {
+  content: "";
+  position: fixed;
+  background: #040404;
+  background-size: cover;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: -1;
+}
+@font-face {
+  font-family: "bootstrap-icons";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/static/my_portfolio/vendor/bootstrap-icons/fonts/bootstrap-icons.woff2") format("woff2"),
+       url("/static/my_portfolio/vendor/bootstrap-icons/fonts/bootstrap-icons.woff") format("woff");
+}
+
+/* Only target the icon(s) you actually need */
+.bi-arrow-left::before {
+  display: inline-block;
+  font-family: "bootstrap-icons"; /* make sure it's quoted */
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  vertical-align: -.125em;
+  content: "\f12f"; /* Unicode for arrow-left */
+}
+
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+  transition: ease-in-out 0.3s;
+  position: relative;
+  align-items: center;
+  z-index: 997;
+  overflow-y: auto;
+}
+#header * {
+  transition: ease-in-out 0.3s;
+}
+#header h1 {
+  font-size: 36px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 700;
+  font-family: 'Oxanium', cursive;
+  
+}
+
+#header h1 a, #header h1 a:hover {
+  color: #fff;
+  line-height: 1;
+  display: inline-block;
+}
+
+@media (max-width: 992px) {
+  #header h1 {
+    font-size: 20px;
+  }
+
+  #header .container {
+    display: flex;
+    align-items: center;
+  }
+
+  #header nav li a {
+    font-size: 14px;
+  }
+}
+
+
+a {
+  color: #1bc4f8;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #6eddff;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, #header .lead {
+  font-family: 'Oxanium', cursive;
+}
+
+@media (min-width: 1024px) {
+  body::before {
+    background-attachment: fixed;
+  }
+
+  #header .lead {
+    line-height: 2.5rem;
+  }
+  
+}
+
+.portfolio-details {
+  padding-top: 40px;
+  overflow-y: auto;
+}
+.portfolio-details .container {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+.portfolio-details .portfolio-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.portfolio-details .portfolio-info {
+  padding-top: 45px;
+}
+.portfolio-details .portfolio-info h3 {
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+.portfolio-details .portfolio-info ul {
+  list-style: none;
+  padding: 0;
+  font-size: 15px;
+}
+.portfolio-details .portfolio-info ul li + li {
+  margin-top: 10px;
+}
+.portfolio-details .portfolio-info p {
+  font-size: 15px;
+  padding: 15px 0 0 0;
+}
+
+.swiper-slide .thumbnails {
+    width: 100%;
+    height: 450px;
+  }
+
+@media (max-width: 992px) {
+  .portfolio-details .portfolio-info {
+    padding-top: 20px;
+  }
+
+  .portfolio-details {
+    padding-top: 0;
+    overflow-y: auto;
+    }
+}
+.portfolio-details .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+}
+.portfolio-details .swiper-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.portfolio-details .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: #1bc4f8;
+}
+
+@media screen and (max-width: 1024px) {
+  .swiper-slide .thumbnails {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
