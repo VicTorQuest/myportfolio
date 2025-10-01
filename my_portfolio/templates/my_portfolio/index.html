@@ -65,7 +65,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Victor Okolie",
-      "jobTitle": "Backend Developer",
+      "jobTitle": "{{my_portfolio.category}}",
       "description": "Experienced Backend Developer & Software Engineer specializing in Django, Python, javascript, solidity and scalable web applications",
       "url": "{{request.build_absolute_uri}}",
       "image": "{{request.scheme}}://{{request.get_host}}{% if my_portfolio.image %}{{my_portfolio.image.url}}{% else %}{% static 'og-image.png' %}{% endif %}",
