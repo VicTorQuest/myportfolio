@@ -36,7 +36,7 @@ class MyWorksSitemap(Sitemap):
 
     def items(self):
         return [
-            'my_works'
+            'projects'
         ]
 
     def location(self, item):

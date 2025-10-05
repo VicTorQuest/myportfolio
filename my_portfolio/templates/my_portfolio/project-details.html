@@ -6,15 +6,16 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>{{project.title}} - Victor Okolie Portfolio</title>
-  <meta name="title" content="{{project.title}} - Victor Okolie Portfolio">
+  <title>{{project.title}} - Victor Okolie's Portfolio</title>
   <meta name="author" content="Victor Okolie"/>
   <meta name="description" content="{{project.description|truncatechars:160}}">
-  <meta name="keywords" content="{{project.title}}, {% for tool in project.tools.all %}{{tool.name}}, {% endfor %} victor, okolie, victor okolie, quest, quest codes, quest coding, portfolio, web developement, backend developement, backend developer, web developer, django developement, django developer, django, {{project.category.name|lower}}">
-  
+  <meta name="keywords" content="{{project.title}}, {% for tool in project.tools.all %}{{tool.name}}, {% endfor %} victor okolie, questcoding, portfolio, web development, backend development, backend developer, web developer, django development, django developer, django, {{project.category.name|lower}}">
+  <meta name="robots" content="index, follow">
+
   <meta property="og:type" content="article">
   <meta property="og:url" content="{{request.build_absolute_uri}}">
   <meta property="og:title" content="{{project.title}} - Victor Okolie's Portfolio">
+  <meta property="og:site_name" content="Victor Okolie's Portfolio">
   <meta property="og:description" content="{{project.description|truncatechars:160}}">
   <meta property="og:image" content="{{ thumbnail_url }}">
   <meta property="og:image:width" content="1200">
@@ -22,6 +23,7 @@
   <meta property="article:author" content="Victor Okolie">
   <meta property="article:published_time" content="{{project.date|date:'c'}}">
   <meta property="article:modified_time" content="{{project.last_updated|date:'c'}}">
+  <meta property="og:locale" content="en_US">
 
 
   <!-- twitter cards -->
@@ -38,8 +40,10 @@
   <link rel="home" href="{% url 'index' %}">
 
   <!-- Favicons -->
-  <link href="{%static 'favicon.ico' %}" rel="icon">
-  <link href="{%static 'favicon.ico' %}"  rel="apple-touch-icon">
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
 
   <!-- Preload critical resource  -->
   <link rel="preload" href="{% static 'my_portfolio/css/project-details.css' %}" as="style">
@@ -58,25 +62,60 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "mainEntity": {
-    "@type": "CreativeWork",
-    "name": "{{project.title}}",
-    "headline": "{{project.title}}",
-    "description": "{{project.description|truncatechars:160}}",
-    "url": "{{request.build_absolute_uri}}",
-    "image": "{{request.scheme}}://{{request.get_host}}{{thumbnail_url}}",
-    "author": {
-      "@type": "Person",
-      "name": "Victor Okolie",
-      "jobTitle": "{{project.role}}",
-      "url": "{{request.scheme}}://{{request.get_host}}{% url 'index' %}"
-    },
-    "datePublished": "{{project.date|date:'c'}}",
-    "dateModified": "{{project.last_updated|date:'c'}}",
-    "genre": "{{project.category.name}}",
-    "programmingLanguage": [{% for tool in project.tools.all %}"{{tool.name}}"{% if not forloop.last %}, {% endif %}{% endfor %}]
+  "@type": "SoftwareSourceCode",
+  "name": "{{project.title}}",
+  "description": "{{project.description|striptags|truncatechars:200}}",
+  "url": "{{request.build_absolute_uri}}",
+  "image": "{{request.scheme}}://{{request.get_host}}{{thumbnail_url}}",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Okolie",
+    "jobTitle": "Full-Stack & Web3 Developer",
+    "url": "{{request.scheme}}://{{request.get_host}}{% url 'index' %}"
+  },
+  {% if project.github_repo %}
+  "codeRepository": "{{project.github_repo}}",
+  {% endif %}
+  "datePublished": "{{project.date|date:'c'}}",
+  "dateModified": "{{project.last_updated|date:'c'}}",
+  "programmingLanguage": [
+    {% for tool in project.tools.all %}
+    "{{tool.name}}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "applicationCategory": "{{project.category.name}}",
+  "isPartOf": {
+    "@type": "CollectionPage",
+    "name": "Victor Okolie's Projects",
+    "url": "{{request.scheme}}://{{request.get_host}}{% url 'projects' %}"
   }
+}
+</script>
+
+<script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{request.scheme}}://{{request.get_host}}{% url 'index' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Projects",
+      "item": "{{request.scheme}}://{{request.get_host}}{% url 'projects' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{project.title}}",
+      "item": "{{request.build_absolute_uri}}"
+    }
+  ]
 }
 </script>
 
@@ -89,7 +128,7 @@
   <header id="header" class="py-3">
     <div class="container d-flex justify-content-between align-items-center">
       <h1><a href="{% url 'index' %}" rel="home">Victor Okolie</a></h1>
-      <a href="{% url 'index' %}#projects" class="btn btn-outline-light btn-sm">
+      <a href="{% url 'projects' %}" class="btn btn-outline-light btn-sm">
         <i class="bi bi-arrow-left"></i> Back to Projects
       </a>
     </div>
@@ -124,7 +163,7 @@
 
                 {% for thumbnails in project.projectthumbnail.all|slice:"1:" %}
                 <div class="swiper-slide">
-                  <img src="{{thumbnails.image.url}}" class="thumbnails" alt="{{project.title}}">
+                  <img src="{{thumbnails.image.url}}" class="thumbnails" alt="{{project.title}} screenshot {{forloop.counter}}">
                 </div>
                 {% empty %}
                 <p>No screenshots available.</p>

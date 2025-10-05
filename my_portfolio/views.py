@@ -58,7 +58,25 @@ def index(request):
     return render(request, "my_portfolio/index.html", context)
 
 
+def projects(request):
+    cache_key = "portfolio_projects_data"
+    context = cache.get(cache_key)
 
+    if not context:
+        try:
+            my_portfolio = Portfolio.objects.select_related("user").prefetch_related("services").get(user__username="Victor")
+        except Portfolio.DoesNotExist:
+            # handle missing portfolio gracefully
+            return render(request, "my_portfolio/index.html", {})
+        
+    my_user = my_portfolio.user
+    projects = Project.objects.filter(user=my_user).select_related("category").prefetch_related("tools", "projectthumbnail").order_by('-date')
+    project_categories = ProjectCategory.objects.all()
+    return render(request, 'my_portfolio/projects.html', {
+        'projects': projects,
+        'project_categories': project_categories,
+        'my_portfolio': my_portfolio
+    })
     
 
 

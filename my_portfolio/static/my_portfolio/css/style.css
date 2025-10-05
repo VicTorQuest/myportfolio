@@ -236,6 +236,10 @@ h1, h2, h3, h4, h5, h6, #header .lead {
   animation:bouncy 5s infinite linear;
 }
 
+.resume-icon:hover {
+  color: white !important;
+}
+
 .resume-icon .bi {
   width: 26px;
   height: 26px;

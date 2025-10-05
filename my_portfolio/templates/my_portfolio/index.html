@@ -7,9 +7,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Victor Okolie – Full-Stack Developer & Blockchain Engineer</title>
-  <meta name="description" content="Full-Stack Web Developer and Blockchain Engineer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3.">
-  <meta name="keywords" content="victor okolie, quest, quest codes, quest coding, backend developer, django developer, python developer, software engineer, web developer, website developer, api development, database design, nigeria developer, freelance developer, portfolio">
+  <title>Victor Okolie – Full-Stack & Web3 Developer</title>
+  <meta name="description" content="Full-Stack & Web3 Developer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3.">
+  <meta name="keywords" content="victor okolie, quest coding, questcoding, full-stack developer portfolio, web3 developer, django developer, python developer, smart contract developer, backend developer, software engineer, website developer, API development, database design, solidity developer, freelance developer nigeria">
   <meta name="author" content="Victor Okolie">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="BYHfNk9mhL8WiO7GUt91PjUvwo6tgQgrXlt5xpo_5-k" />
@@ -17,20 +17,20 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{request.build_absolute_uri}}">
-  <meta property="og:title" content="Victor Okolie – Full-Stack Developer & Blockchain Engineer">
-  <meta property="og:description" content="Full-Stack Web Developer and Blockchain Engineer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3.">
+  <meta property="og:title" content="Victor Okolie – Full-Stack & Web3 Developer">
+  <meta property="og:description" content="Full-Stack & Web3 Developer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3.">
   <meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{% static 'og-image.png' %}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Victor Okolie – Full-Stack Developer & Blockchain Engineer Portfolio Cover Image">
+  <meta property="og:image:alt" content="Victor Okolie – Full-Stack & Web3 Developer Portfolio Cover Image">
   <meta property="og:site_name" content="Victor Okolie's Portfolio">
   <meta property="og:locale" content="en_US">
 
   <!-- twitter cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="{{request.build_absolute_uri}}">
-  <meta name="twitter:title" content="Victor Okolie – Full-Stack Developer & Blockchain Engineer">
-  <meta name="twitter:description" content="Full-Stack Web Developer and Blockchain Engineer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3." />
+  <meta name="twitter:title" content="Victor Okolie – Full-Stack & Web3 Developer">
+  <meta name="twitter:description" content="Full-Stack & Web3 Developer specializing in scalable websites, backend systems, SEO-friendly solutions, and smart contract development for Web3." />
   <meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{% static 'og-image.png' %}" />
   <meta name="twitter:site" content="@victorokolie_" />
   <meta name="twitter:creator" content="@victorokolie_">
@@ -69,7 +69,7 @@
       "@type": "Person",
       "name": "Victor Okolie",
       "jobTitle": "{{my_portfolio.category}}",
-      "description": "Experienced Backend Developer & Software Engineer specializing in Django, Python, javascript, solidity and scalable web applications",
+      "description": "Experienced Full-Stack & Web3 Developer specializing in Django, Python, Javascript, Solidity and scalable web applications",
       "url": "{{request.build_absolute_uri}}",
       "image": "{{request.scheme}}://{{request.get_host}}{% if my_portfolio.image %}{{my_portfolio.image.url}}{% else %}{% static 'og-image.png' %}{% endif %}",
       "email": "{% if my_portfolio.user.email %}{{my_portfolio.user.email}}{% endif %}",
@@ -78,24 +78,29 @@
         "addressLocality": "{% if my_portfolio.address %}{{my_portfolio.address}}{% endif %}"
       },
       "sameAs": [
+       "https://questcoding.com",
+       "https://youtube.com/@questcoding",
         "{% if my_portfolio.linkedin %}{{my_portfolio.linkedin}}{% endif %}",
         "{% if my_portfolio.github %}{{my_portfolio.github}}{% endif %}",
         "{% if my_portfolio.twitter %}{{my_portfolio.twitter}}{% endif %}",
         "{% if my_portfolio.instagram %}{{my_portfolio.instagram}}{% endif %}"
       ],
       "knowsAbout": [
+        "Full-Stack Development",
         "Backend Development",
         "Django",
         "Python",
+        "JavaScript",
         "Web Development",
         "Search Engine Optimization",
         "API Development",
         "Database Design",
         "Software Engineering",
+        "Web3 Development",
         "Smart Contract Development",
         "Solidity",
         "Hardhat",
-        "Web 3"
+        "Blockchain Development"
       ]
     }
     </script>
@@ -110,7 +115,7 @@
         "@type": "Person",
         "name": "Victor Okolie"
       },
-      "description": "Professional portfolio showcasing backend development projects, experience, and services"
+      "description": "Professional portfolio showcasing full-stack web development and Web3 projects, experience, and services"
     }
     </script>
 
@@ -129,7 +134,7 @@
     <div class="container">
 
       <h1><a href="{% url 'index' %}" rel="home">Victor Okolie</a></h1>
-      <p class="lead">I’m a <strong>Full-Stack Web Developer</strong> and Blockchain Engineer, building scalable websites, robust <strong>Backend Systems</strong>, SEO-optimized solutions, and <strong>Smart Contracts</strong> for web 3.</p>
+      <p class="lead">I’m a <strong>Full-Stack & Web3 Developer</strong>, building scalable websites, robust <strong>Backend Systems</strong>, SEO-optimized solutions, and <strong>Smart Contracts</strong> for web3.</p>
       <div class="cta-buttons d-md-none mt-4">
         <a href="#projects" class="btn btn-primary btn-lg me-3">
           See My Works
@@ -139,7 +144,6 @@
         </a>
       </div>
 
-      <!-- <h2>I'm a well-rounded <span>Backend Web Developer</span> and <span>Software Engineer</span> from Nigeria, I build web apps using the current and <span>efficient</span> technologies with a logical approach</h2> -->
 
       <nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
         <ul>
@@ -412,7 +416,7 @@
         {% for project in projects %}
         <div class="col-lg-4 col-md-6 portfolio-item filter-{{project.category}}">
           <div class="portfolio-wrap">
-            <img src="{{project.first_thumbnail}}" loading="lazy" class="img-fluid" alt="{{project.title}}">
+            <img src="{{project.first_thumbnail}}" loading="lazy" class="img-fluid" alt="{{project.title}} - {{project.category.name}} project screenshot">
             <div class="portfolio-info">
               <h4>{{project.title}}</h4>
               <p>{{project.category}}</p>
@@ -485,6 +489,7 @@
         </div>
       </div>
       
+      <p>Check out my <a href="https://questcoding.com" target="_blank" rel="noopener">blog and tutorials at Quest Coding</a></p>
       
 
     </div>
