@@ -69,14 +69,19 @@ def projects(request):
             # handle missing portfolio gracefully
             return render(request, "my_portfolio/index.html", {})
         
-    my_user = my_portfolio.user
-    projects = Project.objects.filter(user=my_user).select_related("category").prefetch_related("tools", "projectthumbnail").order_by('-date')
-    project_categories = ProjectCategory.objects.all()
-    return render(request, 'my_portfolio/projects.html', {
-        'projects': projects,
-        'project_categories': project_categories,
-        'my_portfolio': my_portfolio
-    })
+        my_user = my_portfolio.user
+        projects = Project.objects.filter(user=my_user).select_related("category").prefetch_related("tools", "projectthumbnail").order_by('-date')
+        project_categories = ProjectCategory.objects.all()
+
+        context = {
+                'my_portfolio': my_portfolio,
+                "projects": projects,
+                "project_categories": project_categories,
+            }
+
+        # Cache for 10 minutes
+        cache.set(cache_key, context, 600)
+    return render(request, 'my_portfolio/projects.html', context)
     
 
 

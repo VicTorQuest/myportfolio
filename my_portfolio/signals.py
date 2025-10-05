@@ -5,10 +5,12 @@ from django.core.cache import cache
 
 from .models import Portfolio, Project, Service, Feedback, ProfessionalExperience, Education, Summary, Tool, ProjectCategory
 
-CACHE_KEY = "portfolio_index_data"
+INDEX_CACHE_KEY = "portfolio_index_data"
+PROJECT_CACHE = 'portfolio_projects_data'
 
 def clear_portfolio_cache():
-    cache.delete(CACHE_KEY)
+    cache.delete(PROJECT_CACHE)
+    cache.delete(INDEX_CACHE_KEY)
 
 @receiver(post_save, sender=Portfolio)
 @receiver(post_delete, sender=Portfolio)
