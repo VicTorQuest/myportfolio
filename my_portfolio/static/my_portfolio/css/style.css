@@ -773,7 +773,7 @@ section .container {
 .services .icon-box:hover .icon {
   background: #fff;
 }
-.services .icon-box:hover .icon i {
+.services .icon-box:hover .icon .bi {
   color: #6eddff;
 }
 .services .icon-box:hover .icon::before {
